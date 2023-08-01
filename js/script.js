@@ -44,6 +44,7 @@ async function displayPopularMovies() {
   });
 }
 
+// Display 20 most popular tv shows
 async function displayPopularTVShows() {
   const { results } = await fetchAPIData('tv/popular');
 
@@ -302,11 +303,20 @@ async function searchAPIData() {
   const API_URL = global.api.apiUrl;
   showSpinner();
   const response = await fetch(
-    `${API_URL}search/${global.search.type}?api_key=${API_KEY}&language=en-US&query${global.search.term}`
+    `${API_URL}search/${global.search.type}?api_key=${API_KEY}&language=en-US&query=${global.search.term}`
   );
   const data = await response.json();
   hideSpinner();
   return data;
+}
+
+// Show alert
+function showAlert(message, className) {
+  const alertEl = document.createElement('div');
+  alertEl.classList.add('alert', className);
+  alertEl.appendChild(document.createTextNode(message));
+  document.querySelector('#alert').appendChild(alertEl);
+  setTimeout(() => alertEl.remove(), 3000);
 }
 
 function showSpinner() {
@@ -324,15 +334,6 @@ function highlightActiveLink() {
       link.classList.add('active');
     }
   });
-}
-
-// Show alert
-function showAlert(message, className) {
-  const alertEl = document.createElement('div');
-  alertEl.classList.add('alert', className);
-  alertEl.appendChild(document.createTextNode(message));
-  document.querySelector('#alert').appendChild(alertEl);
-  setTimeout(() => alertEl.remove(), 3000);
 }
 
 function addCommasToNumber(number) {
